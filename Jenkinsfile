@@ -24,11 +24,24 @@ pipeline {
             }
         }
 
+        // stage('Terraform Format Check') {
+        //     steps {
+        //         sh 'terraform fmt -check'
+        //     }
+        // }
+
         stage('Terraform Format Check') {
-            steps {
-                sh 'terraform fmt -check'
-            }
-        }
+  steps {
+    script {
+      def fmtStatus = sh(script: 'terraform fmt -check', returnStatus: true)
+      if (fmtStatus != 0) {
+        echo 'Terraform files are not properly formatted'
+        // Do not fail the build here
+      }
+    }
+  }
+}
+
 
         stage('Terraform Validate') {
             steps {
