@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Sudheer1997-code/2-tier-architecture1' // Update with your Git repo
+                git 'https://github.com/Sudheer1997-code/Terraform-Lab.git' // Update with your Git repo
             }
         } 
 
