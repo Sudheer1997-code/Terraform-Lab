@@ -18,7 +18,12 @@ pipeline {
                 git url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git', branch: 'main'
             }
         }
-    
+    stage('Verify AWS Identity') {
+  steps {
+    sh 'aws sts get-caller-identity'
+  }
+}
+
 
         stage('Terraform Init') {
             steps {
