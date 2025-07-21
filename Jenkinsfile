@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-1' // Change as per your region
+        AWS_REGION = 'us-east-1' // Change as per your 
         TF_VAR_key_name = 'ubutran' // Replace with your actual key name (without `.pem`)
     }
 
