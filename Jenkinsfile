@@ -10,12 +10,13 @@ pipeline {
         terraform 'Terraform-1.6.6' // Set up this Terraform version in Jenkins Tools
     }
 
-    stages {
+     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Sudheer1997-code/Terraform-Lab.git' // Update with your Git repo
+                git url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git', branch: 'main'
             }
-        } 
+        }
+    
 
         stage('Terraform Init') {
             steps {
