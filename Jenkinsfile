@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent { 
+        label 'your-agent-label'
+         }
 
     environment {
         AWS_REGION = 'us-east-1' // Change as per your 
