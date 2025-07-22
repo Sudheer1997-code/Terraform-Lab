@@ -96,11 +96,17 @@ pipeline {
     }
 
     stages {
+        // stage('Checkout Code') {
+        //    git branch: 'main', url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
+
+        // }
+
         stage('Checkout Code') {
-            steps {
-               git branch: 'main', git 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
-            }
-        }
+    steps {
+        checkout scm
+    }
+}
+
 
         stage('Terraform Init') {
             steps {
