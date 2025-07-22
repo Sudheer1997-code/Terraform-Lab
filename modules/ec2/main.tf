@@ -5,9 +5,9 @@ resource "aws_instance" "web" {
   vpc_security_group_ids      = [var.sg_id]
   associate_public_ip_address = true
   key_name                    = var.key_name
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 
   tags = {
     Name = "Web Server"

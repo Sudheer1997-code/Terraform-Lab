@@ -72,10 +72,14 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: '**/*.tf', fingerprint: true
-        }
-        failure {
-            echo 'Terraform pipeline failed.'
-        }
+            node {
+                archiveArtifacts artifacts: '**/*.tf', fingerprint: true
+                echo 'Terraform pipeline failed.'
+            }
+        //     archiveArtifacts artifacts: '**/*.tf', fingerprint: true
+        // }
+        // failure {
+        //     echo 'Terraform pipeline failed.'
+         }
     }
 }
