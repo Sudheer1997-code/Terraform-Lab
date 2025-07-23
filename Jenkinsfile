@@ -1,54 +1,67 @@
-
-
 pipeline {
-    agent any  // or use: agent { label 'your-agent-label' }
-
-    tools {
-        terraform 'Terraform-1.6.6'  // Make sure this version is installed in Jenkins -> Manage Jenkins -> Global Tool Configuration
-    }
+    agent any
 
     environment {
-        TF_VAR_region = 'us-east-1'
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        TF_IN_AUTOMATION      = 'true'
+    }
+
+    options {
+        timestamps()
+        skipStagesAfterUnstable()
     }
 
     stages {
-        stage('Checkout Code') {
+
+        stage('Clean Workspace') {
             steps {
-                git url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git', branch: 'main'
+                deleteDir()
             }
         }
-    
-  stage('Validate') {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Validate') {
             steps {
                 sh 'terraform validate'
             }
         }
 
-    stage('Terraform Init') {
-      steps {
-        sh 'terraform init'
-      }
-    }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
 
-    stage('Terraform Plan & Apply') {
-      steps {
-        sh 'terraform plan'
-        sh 'terraform apply -auto-approve'
-      }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
     }
-    }
-
-    
 
     post {
-        failure {
-            echo 'Pipeline failed.'
+        always {
+            echo 'Cleaning workspace...'
+            deleteDir()
         }
         success {
-            echo 'Pipeline completed successfully.'
+            echo '✅ Deployment successful!'
+        }
+        failure {
+            echo '❌ Deployment failed.'
         }
     }
-}
 }
