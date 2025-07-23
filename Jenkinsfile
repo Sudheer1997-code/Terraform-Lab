@@ -103,49 +103,67 @@ pipeline {
 
         
 
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init'
-            }
-        }
+//         stage('Terraform Init') {
+//             steps {
+//                 sh 'terraform init'
+//             }
+//         }
 
-        stage('Terraform Plan') {
-            steps {
-                sh 'terraform apply -auto-approve tfplan'
-            }
-        }
+//         stage('Terraform Plan') {
+//             steps {
+//                 sh 'terraform apply -auto-approve tfplan'
+//             }
+//         }
 
-        // stage('Terraform Apply') {
-        //     steps {
-        //         input "Apply Terraform changes?"
-        //         sh 'terraform apply tfplan'
-        //     }
-        // }
+//         // stage('Terraform Apply') {
+//         //     steps {
+//         //         input "Apply Terraform changes?"
+//         //         sh 'terraform apply tfplan'
+//         //     }
+//         // }
 
-        stage('Terraform Apply') {
-    steps {
-        sh 'terraform apply -auto-approve'
-    }
-}
+//         stage('Terraform Apply') {
+//     steps {
+//         sh 'terraform apply -auto-approve'
+//     }
+// }
   stage('Validate') {
             steps {
                 sh 'terraform validate'
             }
         }
 
-         stage('Terraform Plan') {
-            steps {
-                sh 'terraform plan -input=false'
-            }
-        }
+//          stage('Terraform Plan') {
+//             steps {
+//                 sh 'terraform plan -input=false'
+//             }
+//         }
 
-        stage('Terraform Apply') {
-            steps {
-                sh 'terraform apply -auto-approve -input=false'
-            }
-        }
+//         stage('Terraform Apply') {
+//             steps {
+//                 sh 'terraform apply -auto-approve -input=false'
+//             }
+//         }
 
+ stage('Terraform Init') {
+      steps {
+        sh 'terraform init'
+      }
     }
+
+    stage('Terraform Plan') {
+      steps {
+        sh 'terraform plan -out=tfplan'
+      }
+    }
+
+    stage('Terraform Apply') {
+      steps {
+        sh 'terraform apply -auto-approve tfplan'
+      }
+    }
+
+    
 
     post {
         failure {
@@ -155,4 +173,5 @@ pipeline {
             echo 'Pipeline completed successfully.'
         }
     }
+}
 }
