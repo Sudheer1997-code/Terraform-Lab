@@ -35,7 +35,14 @@ pipeline {
 
         stage('Terraform Validate') {
             steps {
-                sh 'terraform validate'
+                sh '''
+            echo "Files in workspace:"
+            ls -la
+            echo "Terraform version:"
+            terraform version
+            echo "Validating config..."
+            terraform validate
+        '''
             }
         }
 
