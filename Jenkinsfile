@@ -101,12 +101,7 @@ pipeline {
 
         // }
 
-        stage('Checkout Code') {
-    steps {
-        checkout scm
-    }
-}
-
+        
 
         stage('Terraform Init') {
             steps {
