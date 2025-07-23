@@ -96,54 +96,19 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout Code') {
-        //    git branch: 'main', url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
-
-        // }
-
-        
-
-//         stage('Terraform Init') {
-//             steps {
-//                 sh 'terraform init'
-//             }
-//         }
-
-//         stage('Terraform Plan') {
-//             steps {
-//                 sh 'terraform apply -auto-approve tfplan'
-//             }
-//         }
-
-//         // stage('Terraform Apply') {
-//         //     steps {
-//         //         input "Apply Terraform changes?"
-//         //         sh 'terraform apply tfplan'
-//         //     }
-//         // }
-
-//         stage('Terraform Apply') {
-//     steps {
-//         sh 'terraform apply -auto-approve'
-//     }
-// }
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git', branch: 'main'
+            }
+        }
+    
   stage('Validate') {
             steps {
                 sh 'terraform validate'
             }
         }
 
-//          stage('Terraform Plan') {
-//             steps {
-//                 sh 'terraform plan -input=false'
-//             }
-//         }
 
-//         stage('Terraform Apply') {
-//             steps {
-//                 sh 'terraform apply -auto-approve -input=false'
-//             }
-//         }
 
  stage('Terraform Init') {
       steps {
@@ -151,15 +116,28 @@ pipeline {
       }
     }
 
-    stage('Terraform Plan') {
+    // stage('Terraform Plan') {
+    //   steps {
+    //     sh 'terraform plan -out=tfplan'
+    //   }
+    // }
+
+    // stage('Terraform Apply') {
+    //   steps {
+    //     sh 'terraform apply -auto-approve tfplan'
+    //   }
+    // }
+
+    stage('Terraform Init') {
       steps {
-        sh 'terraform plan -out=tfplan'
+        sh 'terraform init'
       }
     }
 
-    stage('Terraform Apply') {
+    stage('Terraform Plan & Apply') {
       steps {
-        sh 'terraform apply -auto-approve tfplan'
+        sh 'terraform plan'
+        sh 'terraform apply -auto-approve'
       }
     }
 
