@@ -115,12 +115,24 @@ pipeline {
             }
         }
 
+        // stage('Terraform Apply') {
+        //     steps {
+        //         input "Apply Terraform changes?"
+        //         sh 'terraform apply tfplan'
+        //     }
+        // }
+
         stage('Terraform Apply') {
+    steps {
+        sh 'terraform apply -auto-approve'
+    }
+}
+  stage('Validate') {
             steps {
-                input "Apply Terraform changes?"
-                sh 'terraform apply tfplan'
+                sh 'terraform validate'
             }
         }
+
     }
 
     post {
