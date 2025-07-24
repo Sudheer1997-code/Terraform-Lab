@@ -27,11 +27,13 @@ pipeline {
             }
         }
 
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init'
-            }
+       stage('Terraform Validate') {
+    steps {
+        script {
+            sh 'terraform validate'
         }
+    }
+}
 
         stage('Terraform Validate') {
             steps {
