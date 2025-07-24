@@ -13,11 +13,11 @@ azs = ["us-east-1a", "us-east-1b"]
 
 # az                   = "ap-south-1a"
 
-ami                  = "ami-020cba7c55df1f615"
-instance_type        = "t2.micro"
-key_name             = "ubutran"
+ami           = "ami-020cba7c55df1f615"
+instance_type = "t2.micro"
+key_name      = "ubutran"
 
-db_instance_class    = "db.t3.micro"
-db_name              = "mydb"
-db_username          = "admin"
-db_password          = "admin1234"
+db_instance_class = "db.t3.micro"
+db_name           = "mydb"
+db_username       = "admin"
+db_password       = "admin1234"

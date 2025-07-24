@@ -9,14 +9,14 @@ resource "aws_db_subnet_group" "rds" {
 }
 
 resource "aws_db_instance" "mysql" {
-  allocated_storage    = 20
-  engine               = "mysql"
-  engine_version       = "8.0"
-  instance_class       = var.instance_class
-  db_name              = var.db_name
-  username             = var.db_username
-  password             = var.db_password
-  db_subnet_group_name = aws_db_subnet_group.rds.name
+  allocated_storage      = 20
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = var.instance_class
+  db_name                = var.db_name
+  username               = var.db_username
+  password               = var.db_password
+  db_subnet_group_name   = aws_db_subnet_group.rds.name
   vpc_security_group_ids = [var.db_sg_id]
-  skip_final_snapshot  = true
+  skip_final_snapshot    = true
 }

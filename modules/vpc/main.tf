@@ -7,10 +7,10 @@ resource "aws_vpc" "main" {
 
 
 resource "aws_subnet" "public" {
-  count             = length(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.public_subnet_cidrs[count.index]
-  availability_zone = var.azs[count.index]
+  count                   = length(var.public_subnet_cidrs)
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = true
 
   tags = {
@@ -102,7 +102,7 @@ resource "aws_route" "default_route" {
 }
 
 resource "aws_route_table_association" "public_assoc" {
-    count          = length(aws_subnet.public)
+  count          = length(aws_subnet.public)
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public_rt.id
 }
@@ -139,9 +139,9 @@ resource "aws_security_group" "db_sg" {
   vpc_id = aws_vpc.main.id
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
     security_groups = [aws_security_group.web_sg.id]
   }
 
