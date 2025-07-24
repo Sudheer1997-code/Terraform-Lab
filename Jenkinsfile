@@ -5,7 +5,6 @@ pipeline {
         TF_IN_AUTOMATION = "true"
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        TF_IN_AUTOMATION      = 'true'
     }
 
     options {
@@ -23,25 +22,17 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
+                git branch: 'main', url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
             }
         }
 
-//        stage('Terraform Validate') {
-//     steps {
-//         script {
-//             sh 'terraform validate'
-//         }
-//     }
-// }
-stage('Terraform Init') {
+        stage('Terraform Init') {
             steps {
                 sh 'terraform init -input=false'
             }
         }
 
-         stage('Terraform Validate') {
+        stage('Terraform Validate') {
             steps {
                 sh 'terraform validate'
             }
@@ -53,7 +44,7 @@ stage('Terraform Init') {
             }
         }
 
-          stage('Terraform Apply') {
+        stage('Terraform Apply') {
             steps {
                 sh 'terraform apply -auto-approve tfplan.out'
             }
