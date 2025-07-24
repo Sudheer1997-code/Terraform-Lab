@@ -16,8 +16,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                git 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
+                
+              git branch: 'main',  url: 'https://github.com/Sudheer1997-code/Terraform-Lab.git'
             }
         }
 
