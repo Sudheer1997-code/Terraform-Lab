@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        TF_IN_AUTOMATION = "true"
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         TF_IN_AUTOMATION      = 'true'
@@ -34,38 +35,41 @@ pipeline {
 //         }
 //     }
 // }
+stage('Terraform Init') {
+            steps {
+                sh 'terraform init -input=false'
+            }
+        }
 
-        stage('Terraform Validate') {
+         stage('Terraform Validate') {
             steps {
                 sh 'terraform validate'
-            
-      
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                sh 'terraform plan -out=tfplan.out -input=false'
             }
         }
 
-        stage('Terraform Apply') {
+          stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve tfplan'
+                sh 'terraform apply -auto-approve tfplan.out'
             }
         }
     }
 
     post {
-        always {
-            echo 'Cleaning workspace...'
-            deleteDir()
-        }
         success {
-            echo '✅ Deployment successful!'
+            echo "✅ Terraform apply successful!"
         }
         failure {
-            echo '❌ Deployment failed.'
+            echo "❌ Terraform apply failed!"
+        }
+        cleanup {
+            echo "🧹 Cleaning up workspace..."
+            deleteDir()
         }
     }
 }
