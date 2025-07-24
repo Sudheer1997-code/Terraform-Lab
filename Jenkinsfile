@@ -28,25 +28,43 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init -input=false'
+                timeout(time: 5, unit: 'MINUTES') {
+                    sh 'terraform init -input=false'
+                }
+            }
+        }
+
+        stage('Terraform Format Check') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    sh 'terraform fmt -check -recursive'
+                }
             }
         }
 
         stage('Terraform Validate') {
             steps {
-                sh 'terraform validate'
+                echo "Running terraform validate..."
+                timeout(time: 3, unit: 'MINUTES') {
+                    sh 'terraform validate'
+                }
+                echo "Terraform validate completed."
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -out=tfplan.out -input=false'
+                timeout(time: 5, unit: 'MINUTES') {
+                    sh 'terraform plan -out=tfplan.out -input=false'
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve tfplan.out'
+                timeout(time: 10, unit: 'MINUTES') {
+                    sh 'terraform apply -auto-approve tfplan.out'
+                }
             }
         }
     }
