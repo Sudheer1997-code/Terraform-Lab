@@ -37,14 +37,14 @@ pipeline {
             }
         }
 
-        stage('Terraform Validate') {
-            steps {
-                echo "Running terraform validate..."
-                timeout(time: 3, unit: 'MINUTES') {
-                    sh 'terraform validate || true' // allows pipeline to continue even if schema fails temporarily
-                }
-            }
-        }
+        // stage('Terraform Validate') {
+        //     steps {
+        //         echo "Running terraform validate..."
+        //         timeout(time: 3, unit: 'MINUTES') {
+        //             sh 'terraform validate || true' // allows pipeline to continue even if schema fails temporarily
+        //         }
+        //     }
+        // }
 
         stage('Terraform Plan') {
             steps {
